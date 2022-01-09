@@ -26,4 +26,13 @@ struct function_traits<Ret(*)(Args...)>:function_traits<Ret(Args...)>{};
 template<typename Ret,typename ...Args>
 struct function_traits<std::function<Ret(Args...)>>:function_traits<Ret(Args...)>{};
 
+#define FUNCTION_TRAITS(...)\
+template<typename ReturnType,typename ClassType,typename... Args>\
+struct function_traits<ReturnType(ClassType::*)(Args...)__VA_ARGS__>:function_traits<ReturnType(Args...)>{};\
+
+FUNCTION_TRAITS()
+FUNCTION_TRAITS(const)
+FUNCTION_TRAITS(volatile)
+FUNCTION_TRAITS(const volatile)
+
 #endif
